@@ -23,7 +23,7 @@ for i in range(6):
                             try:
                                 neighbour_states.append(grid[neighbour])
                             except KeyError:
-                                # not in the initial 3d space
+                                # not in the initial 4d space
                                 pass
         if state == '.' and neighbour_states.count('#') == 3:
             update.append([(x, y, z, w), '#'])
