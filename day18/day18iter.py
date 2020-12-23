@@ -51,8 +51,48 @@ def evaluate(str_expr):
     return result
 
 
-expression_sum = 0
-for expression in expressions:
-    expression_sum += (evaluate(expression))
+def add_parenthesis(expression: str) -> str:
+    """ add parenthesis to prioritize addition """
+    add_index = [i for i, val in enumerate(expression) if val == '+']
+    exp_list = list(expression)
+    for i, _ in enumerate(add_index):
+        add_index = [i for i, val in enumerate(exp_list) if val == '+']
+        # backwards
+        index = add_index[i]
+        opening = 0
+        while index > 0:
+            index -= 1
+            if exp_list[index] == ')':
+                opening += 1
+            elif exp_list[index] == '(':
+                opening -= 1
+            elif exp_list[index] in ('+', '*'):
+                continue
+            if opening == 0:
+                exp_list.insert(index, '(')
+                break
+                index = add_index[i]
+        add_index = [i for i, val in enumerate(exp_list) if val == '+']
+        index = add_index[i]
+        opening = 0
+        # forwards
+        while index > 0:
+            index += 1
+            if exp_list[index] == '(':
+                opening += 1
+            elif exp_list[index] == ')':
+                opening -= 1
+            elif exp_list[index] in ('+', '*'):
+                continue
+            if opening == 0:
+                exp_list.insert(index+1, ')')
+                break
+    return ''.join(exp_list)
 
-print(f"Solution part 1: {expression_sum}")
+expression_sum_1 = expression_sum_2 = 0
+for expression in expressions:
+    expression_sum_1 += (evaluate(expression))
+    expression_sum_2 += (evaluate(add_parenthesis(expression)))
+
+print(f"Solution part 1: {expression_sum_1}")
+print(f"Solution part 1: {expression_sum_2}")
