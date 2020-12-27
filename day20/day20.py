@@ -1,7 +1,7 @@
 from math import sqrt
 
 tiles_dict = {}
-with open("input.txt") as inp:
+with open("test.txt") as inp:
     tiles = inp.read().strip('\n').split('\n\n')
     for tile in tiles:
         id_, squares = tile.split(':')
